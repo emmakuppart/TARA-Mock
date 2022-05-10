@@ -26,11 +26,12 @@ type volituskood string
 type forTokenType struct {
 	clientID string // autentimispäringust saadud client_id väärtus,
 	// tagastatakse identsustõendis, väites (claim) aud (audience)
-	sub        string // subject, isikutõendi väli "sub"
-	familyName string // family_name
-	givenName  string // given_name
-	state      string // autentimispäringus saadetud turvaväärtus
-	nonce      string // autentimispäringus saadetud turvaväärtus
+	sub                  string // subject, isikutõendi väli "sub"
+	familyName           string // family_name
+	givenName            string // given_name
+	state                string // autentimispäringus saadetud turvaväärtus
+	nonce                string // autentimispäringus saadetud turvaväärtus
+	govSsoLoginChallenge string // autentimispäringus saadetud GOVSSO teenusega seotud turvaväärtus
 }
 
 // Identsustõendite hoidla

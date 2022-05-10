@@ -25,10 +25,11 @@ type Claims struct {
 		GivenName   string `json:"given_name"`
 		FamilyName  string `json:"family_name"`
 	} `json:"profile_attributes"`
-	Amr   []string `json:"amr"` // Autentimismeetod
-	State string   `json:"state"`
-	Nonce string   `json:"nonce"`
-	Acr   string   `json:"acr"` // Autentimistase
+	Amr                  []string `json:"amr"` // Autentimismeetod
+	State                string   `json:"state"`
+	Nonce                string   `json:"nonce"`
+	Acr                  string   `json:"acr"` // Autentimistase
+	GovSsoLoginChallenge string   `json:"govsso_login_challenge,omitempty"`
 }
 
 // Valid kontrollib identsustõendi õigsust.
@@ -80,14 +81,15 @@ func sendIdentityToken(w http.ResponseWriter, r *http.Request) {
 		Issuer:   "https://" + conf.TaraMockHost + conf.HTTPServerPort,
 		Audience: v.clientID,
 		// Identsustõendi kehtivusaeg - 1 minute
-		ExpiresAt: time.Now().Add(1 * time.Minute).Unix(),
-		IssuedAt:  time.Now().Unix(),
-		NotBefore: time.Now().Unix(),
-		Subject:   v.sub,
-		Amr:       []string{"mID"},
-		State:     v.state,
-		Nonce:     v.nonce,
-		Acr:       "high", // Tagatistase 'kõrge' )
+		ExpiresAt:            time.Now().Add(1 * time.Minute).Unix(),
+		IssuedAt:             time.Now().Unix(),
+		NotBefore:            time.Now().Unix(),
+		Subject:              v.sub,
+		Amr:                  []string{"mID"},
+		State:                v.state,
+		Nonce:                v.nonce,
+		Acr:                  "high", // Tagatistase 'kõrge' )
+		GovSsoLoginChallenge: v.govSsoLoginChallenge,
 	}
 
 	// Moodusta sünnikp isikukoodist.

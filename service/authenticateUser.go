@@ -18,14 +18,15 @@ func authenticateUser(w http.ResponseWriter, r *http.Request) {
 	// OidcParams hoiab klientrakendusest saadetud päringu
 	// OpenID Connect kohaseid parameetreid.
 	type OidcParams struct {
-		RedirectURI  string // redirect_uri
-		Scope        string // scope
-		State        string // state
-		ResponseType string // response_type
-		ClientID     string // client_id
-		UILocales    string // ui_locales
-		Nonce        string // nonce
-		AcrValues    string // acr_values
+		RedirectURI          string // redirect_uri
+		Scope                string // scope
+		State                string // state
+		ResponseType         string // response_type
+		ClientID             string // client_id
+		UILocales            string // ui_locales
+		Nonce                string // nonce
+		AcrValues            string // acr_values
+		GovSsoLoginChallenge string // govsso_login_challenge
 	}
 
 	r.ParseForm() // Parsi päringuparameetrid.
@@ -73,6 +74,7 @@ func authenticateUser(w http.ResponseWriter, r *http.Request) {
 		forToken.clientID = getPtr("client_id", r)
 		forToken.state = getPtr("state", r)
 		forToken.nonce = getPtr("nonce", r)
+		forToken.govSsoLoginChallenge = getPtr("govsso_login_challenge", r)
 
 		// ..ja pane tallele
 		mutex.Lock()
@@ -105,6 +107,7 @@ func authenticateUser(w http.ResponseWriter, r *http.Request) {
 	pr.UILocales = getPtr("ui_locales", r)
 	pr.Nonce = getPtr("nonce", r)
 	pr.AcrValues = getPtr("acr_values", r)
+	pr.GovSsoLoginChallenge = getPtr("govsso_login_challenge", r)
 
 	// Valmista ette malli parameetrid. Mallile saadetakse päringu-
 	// parameetrid (taustateabeks) ja etteantud identiteedid (isikud,

@@ -21,6 +21,7 @@ func sendUserBack(w http.ResponseWriter, r *http.Request) {
 	state := getPtr("state", r)
 	nonce := getPtr("nonce", r)
 	clientID := getPtr("client_id", r)
+	govSsoLoginChallenge := getPtr("govsso_login_challenge", r)
 
 	// Genereeri volituskood
 	var c volituskood
@@ -57,6 +58,7 @@ func sendUserBack(w http.ResponseWriter, r *http.Request) {
 	forToken.clientID = clientID
 	forToken.state = state
 	forToken.nonce = nonce
+	forToken.govSsoLoginChallenge = govSsoLoginChallenge
 
 	// ..ja pane tallele
 	mutex.Lock()

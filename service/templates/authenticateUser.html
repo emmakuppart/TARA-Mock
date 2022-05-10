@@ -34,6 +34,9 @@
       ui_locales = <code>{{ .Request.UILocales }}</code>,
       nonce = <code>{{ .Request.Nonce }}</code>,
       acr_values = <code>{{ .Request.AcrValues }}</code>
+      {{if .Request.GovSsoLoginChallenge}}
+        govsso_login_challenge = <code>{{ .Request.GovSsoLoginChallenge }}</code>
+      {{end}}
     </div>
     <div class="note">
       Vali isik, kellena sisened
@@ -65,7 +68,10 @@
             value="{{ .Request.State }}">
           <input type="hidden" id="nonce" name="nonce"
             value="{{ .Request.Nonce }}">
-
+          {{if .Request.GovSsoLoginChallenge}}
+          <input type="hidden" id="govsso_login_challenge" name="govsso_login_challenge"
+                 value="{{ .Request.GovSsoLoginChallenge }}">
+          {{end}}
           <input type="submit" value="kinnita" class="nupp" />
         </form>
 
@@ -84,6 +90,10 @@
             value="{{ .Request.State }}">
           <input type="hidden" id="nonce" name="nonce"
             value="{{ .Request.Nonce }}">
+          {{if .Request.GovSsoLoginChallenge}}
+          <input type="hidden" id="govsso_login_challenge" name="govsso_login_challenge"
+                 value="{{ .Request.GovSsoLoginChallenge }}">
+          {{end}}
 
           <p>
             <label>isikukood:</label><br>
